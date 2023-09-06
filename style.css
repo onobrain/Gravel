@@ -1,0 +1,19 @@
+* {
+    margin : 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#canvas {
+    position: absolute;
+    left:50%;
+    top: 50%;
+    transform: translate(-50% , -50%);
+    border : 2px solid gray;
+    width : 1200px;
+    height: 793px;
+}
+
+#images {
+    display: none;
+}
