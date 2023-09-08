@@ -2,7 +2,7 @@
 import { player } from "./player.js";
 import { InputHandler } from "./input.js";
 import { Background1 } from "./background.js";
-import {  Sprout } from "./enemies.js";
+import {  Sprout , Seeker , Golem } from "./enemies.js";
 
 
 window.addEventListener('load' , ()=>{
@@ -70,10 +70,10 @@ window.addEventListener('load' , ()=>{
 
         // -gene
         addEnemies(){
-            if(this.enemies.length < this.maxEnemies) {
-                this.enemies.push(new Sprout(this))
+            if(this.enemies.length < 2) {
+                // this.enemies.push(new Sprout(this))
                 // this.enemies.push(new Seeker(this))
-                // this.enemies.push(new Golem(this))
+                this.enemies.push(new Golem(this))
             }
         }
 

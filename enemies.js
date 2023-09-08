@@ -30,6 +30,7 @@ class Enemy {
       if (this.frameY < this.maxFrame) this.frameY++;
       else this.frameY = 0;
       this.frameTimer = 0;
+      // console.log(this.game.eneimes.length)
     } else {
       this.frameTimer += deltaTime;
     }
@@ -56,45 +57,6 @@ class Enemy {
         return false;
     }
 }
-
-  // -end
-  draw(context) {
-    context.save();
-    context.strokeStyle = "red";
-
-    if (this.game.debug) {
-      context.strokeRect(this.x, this.y, this.width, this.height);
-    }
-
-    if (this.toLeft) {
-      context.scale(-1, 1);
-      context.drawImage(
-        this.image,
-        0,
-        this.frameY * this.SpriteHeight,
-        this.SpriteWidth,
-        this.SpriteHeight,
-        -this.x - this.width + this.xAdjustment,
-        this.y + this.yAdjustment,
-        this.scaledWidth,
-        this.scaledHeight
-      );
-
-      context.restore();
-    } else {
-      context.drawImage(
-        this.image,
-        0,
-        this.frameY * this.SpriteHeight,
-        this.SpriteWidth,
-        this.SpriteHeight,
-        this.x + this.xAdjustment,
-        this.y + this.yAdjustment,
-        this.scaledWidth,
-        this.scaledHeight
-      );
-    }
-  }
 
   // enemy state;
   setState(state) {
@@ -139,6 +101,48 @@ export class Sprout extends Enemy {
     this.lives = 2;
   }
 
+
+    // -end
+    draw(context) {
+      context.save();
+      context.strokeStyle = "red";
+  
+      if (this.game.debug) {
+        context.strokeRect(this.x, this.y, this.width, this.height);
+      }
+  
+      if (this.toLeft) {
+        context.scale(-1, 1);
+        context.drawImage(
+          this.image,
+          0,
+          this.frameY * this.SpriteHeight,
+          this.SpriteWidth,
+          this.SpriteHeight,
+          -this.x - this.width + this.xAdjustment,
+          this.y + this.yAdjustment,
+          this.scaledWidth,
+          this.scaledHeight
+        );
+  
+        context.restore();
+      } else {
+        context.drawImage(
+          this.image,
+          0,
+          this.frameY * this.SpriteHeight,
+          this.SpriteWidth,
+          this.SpriteHeight,
+          this.x + this.xAdjustment,
+          this.y + this.yAdjustment,
+          this.scaledWidth,
+          this.scaledHeight
+        );
+      }
+    }
+  
+  
+
 update(deltaTime) {
     super.update(deltaTime);
     // mouvement.
@@ -150,27 +154,172 @@ update(deltaTime) {
   }
 }
 
-// export class Seeker extends Enemy {
-//     constructor(game) {
-//         super();
-//         this.game = game;
-//         this.enemyName = 'seeker'
-//         this.SpriteWidth = 120
-//         this.SpriteHeight = 120
-//         this.width = this.SpriteWidth;
-//         this.height = this.SpriteHeight;;
-//         this.scaledWidth = this.SpriteWidth * 1.5;
-//         this.scaledHeight = this.SpriteHeight * 1.5;
-//         this.xAdjustment = (this.width - this.scaledWidth) / 2;
-//         this.yAdjustment = (this.height - this.scaledHeight) / 2;
-//         this.x = Math.random() * this.game.width - this.width;
-//         this.y = this.game.height - this.height - this.game.groundMargin;
-//         this.maxFrame;;
-//         this.image;
-//         this.speedX = 1;
-//         this.lives = 2
-//     }
-// }
+
+export class Seeker extends Enemy {
+  constructor(game) {
+    super(game);
+    this.game = game;
+    this.enemyName = 'seeker';
+    this.SpriteWidth = 120;
+    this.SpriteHeight = 120;
+    this.width = this.SpriteWidth;
+    this.height = this.SpriteHeight;
+    this.scaledWidth = this.SpriteWidth * 1.5;
+    this.scaledHeight = this.SpriteHeight * 1.5;
+    this.xAdjustment = (this.width - this.scaledWidth) / 2;
+    this.yAdjustment = (this.height - this.scaledHeight) / 2;
+    this.x = Math.random() * (this.game.width - this.width); // Corrected this line
+    this.y = this.game.height - this.height - this.game.groundMargin;
+    this.maxFrame = 5;
+    this.speedModifier;
+
+    this.currentState = this.states[0];
+    // images:
+    this.seekerIdleImage = document.getElementById("seekerIdle");
+    this.seekerMoveImage = document.getElementById("seekerMove");
+    this.seekerDamageImage = document.getElementById("seekerDamage");
+    this.seekerAttackImage = document.getElementById("seekerAttack");
+    this.seekerDeathImage = document.getElementById("seekerDeath");
+
+    this.image = this.seekerMoveImage;
+    this.speedX = 1;
+    this.lives = 2;
+  }
+
+    // -end
+    draw(context) {
+      context.save();
+      context.strokeStyle = "red";
+  
+      if (this.game.debug) {
+        context.strokeRect(this.x, this.y, this.width, this.height);
+      }
+  
+      if (this.toLeft) {
+        context.scale(-1, 1);
+        context.drawImage(
+          this.image,
+          0,
+          this.frameY * this.SpriteHeight,
+          this.SpriteWidth,
+          this.SpriteHeight,
+          -this.x - this.width + this.xAdjustment,
+          this.y + this.yAdjustment,
+          this.scaledWidth,
+          this.scaledHeight
+        );
+  
+        context.restore();
+      } else {
+        context.drawImage(
+          this.image,
+          0,
+          this.frameY * this.SpriteHeight,
+          this.SpriteWidth,
+          this.SpriteHeight,
+          this.x + this.xAdjustment,
+          this.y + this.yAdjustment,
+          this.scaledWidth,
+          this.scaledHeight
+        );
+      }
+    }
+  
+  
+  
+  update(deltaTime) {
+    super.update(deltaTime);
+    // movement.
+    if (this.toLeft) {
+      this.x -= this.speedX * this.game.speed + this.speedModifier;
+    } else {
+      this.x -= this.speedX * this.game.speed - this.speedModifier;
+    }
+  }
+}
+
+export class Golem extends Enemy {
+  constructor(game) {
+    super(game);
+    this.game = game;
+    this.enemyName = 'golem';
+    this.SpriteWidth = 160;
+    this.SpriteHeight = 160;
+    this.width = this.SpriteWidth;
+    this.height = this.SpriteHeight;
+    this.scaledWidth = this.SpriteWidth * 2.5;
+    this.scaledHeight = this.SpriteHeight * 2.5;
+    this.xAdjustment = (this.width - this.scaledWidth) / 2;
+    this.yAdjustment = (-this.height);
+    this.x = Math.random() * (this.game.width - this.width); 
+    this.y = this.game.height - this.height - this.game.groundMargin;
+    this.maxFrame = 5;
+    this.speedModifier;
+
+    this.currentState = this.states[0];
+    // images:
+    this.golemIdleImage = document.getElementById("golemIdle");
+    this.golemMoveImage = document.getElementById("golemMove");
+    this.golemDamageImage = document.getElementById("golemDamage");
+    this.golemAttackImage = document.getElementById("golemAttack");
+    this.golemDeathImage = document.getElementById("golemDeath");
+
+    this.image = this.golemMoveImage;
+    this.speedX = 1;
+    this.lives = 4;
+  }
+
+  // -end
+  draw(context) {
+    context.save();
+    context.strokeStyle = "red";
+
+    if (this.game.debug) {
+      context.strokeRect(this.x, this.y, this.width, this.height);
+    }
+
+    if (!this.toLeft) {
+      context.scale(-1, 1);
+      context.drawImage(
+        this.image,
+        0,
+        this.frameY * this.SpriteHeight,
+        this.SpriteWidth,
+        this.SpriteHeight,
+        -this.x - this.width + this.xAdjustment,
+        this.y + this.yAdjustment,
+        this.scaledWidth,
+        this.scaledHeight
+      );
+
+      context.restore();
+    } else {
+      context.drawImage(
+        this.image,
+        0,
+        this.frameY * this.SpriteHeight,
+        this.SpriteWidth,
+        this.SpriteHeight,
+        this.x + this.xAdjustment,
+        this.y + this.yAdjustment,
+        this.scaledWidth,
+        this.scaledHeight
+      );
+    }
+  }
+
+
+  update(deltaTime) {
+    super.update(deltaTime);
+    // movement.
+    if (this.toLeft) {
+      this.x -= this.speedX * this.game.speed + this.speedModifier;
+    } else {
+      this.x -= this.speedX * this.game.speed - this.speedModifier;
+    }
+  }
+}
+
 
 // export class Golem extends Enemy {
 //     constructor(game) {

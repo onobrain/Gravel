@@ -31,6 +31,18 @@ export class MoveLeft extends State {
                 this.enemy.toLeft = true;
                 this.enemy.image = this.enemy.sproutMoveImage;
             break;
+            case 'seeker' : 
+                this.enemy.maxFrame = 5
+                this.enemy.speedModifier = Math.random() * 3 + 3;
+                this.enemy.toLeft = true;
+                this.enemy.image = this.enemy.seekerMoveImage;
+            break;
+            case 'golem' : 
+                this.enemy.maxFrame = 5;
+                this.enemy.speedModifier = Math.random() * 2.5 + 1;
+                this.enemy.toLeft = true;
+                this.enemy.image = this.enemy.golemMoveImage
+            break;
         }
 
     }
@@ -64,7 +76,19 @@ export class MoveRight extends State {
                 this.enemy.speedModifier = Math.random() * 5 + 5
                 this.enemy.toLeft = false;
                 this.enemy.image = this.enemy.sproutMoveImage;
-            break;
+                break;
+            case 'seeker' : 
+                this.enemy.maxFrame = 5
+                this.enemy.speedModifier = Math.random() * 3 + 3;
+                this.enemy.toLeft = false;
+                this.enemy.image = this.enemy.seekerMoveImage;
+                break;
+                case 'golem' : 
+                    this.enemy.maxFrame = 5;
+                    this.enemy.speedModifier = Math.random() * 2.5 + 1;
+                    this.enemy.toLeft = false;
+                    this.enemy.image = this.enemy.golemMoveImage
+                break;
         }
 
     }
@@ -99,6 +123,20 @@ export class AttackLeft extends State {
                 this.enemy.toLeft = true;
                 this.enemy.maxFrame = 5;
                 this.enemy.image = this.enemy.sproutAttackImage;
+                this.attackTimer = 0; // Reset the attackTimer
+                break;
+            case 'seeker' : 
+                this.enemy.maxFrame = 5
+                this.enemy.speedModifier = 0;
+                this.enemy.toLeft = true;
+                this.enemy.image = this.enemy.seekerAttackImage;
+                this.attackTimer = 0; // Reset the attackTimer
+            break;
+            case 'golem' : 
+                this.enemy.maxFrame = 5;
+                this.enemy.speedModifier = 0;
+                this.enemy.toLeft = true;
+                this.enemy.image = this.enemy.golemAttackImage
                 this.attackTimer = 0; // Reset the attackTimer
             break;
         }
@@ -139,15 +177,41 @@ export class AttackRight extends State {
                 if(this.attackTimer >= this.attackInterval) {
                     this.enemy.isAttacking = true;
                 }
+                break;
+            case 'seeker' : 
+                this.enemy.maxFrame = 5
+                this.enemy.speedModifier = 0;
+                this.enemy.toLeft = false;
+                this.enemy.image = this.enemy.seekerAttackImage;
+                if(this.attackTimer >= this.attackInterval) {
+                    this.enemy.isAttacking = true;
+                }
+            break;
+            case 'golem' : 
+                this.enemy.maxFrame = 5;
+                this.enemy.speedModifier = 0;
+                this.enemy.toLeft = false;
+                this.enemy.image = this.enemy.golemAttackImage
+                if(this.attackTimer >= this.attackInterval) {
+                    this.enemy.isAttacking = true;
+                }
             break;
         }
     }
 
-    transition(player) {
-        if (!this.enemy.checkCollision() && this.enemy.frameY >= this.enemy.maxFrame) {
-            this.enemy.isAttacking = false; // Reset isAttacking when transitioning out of attack state
-            this.enemy.setState(states.MOVE_LEFT);
-        } 
-    }
+        transition(player, deltaTime) {
+            if (!this.enemy.isAttacking) {
+                if (this.attackTimer >= this.attackInterval) {
+                    this.enemy.isAttacking = true;
+                } else {
+                    this.attackTimer += deltaTime; // Add this line to increment the attack timer
+                }
+            }
+            
+            if (!this.enemy.checkCollision() && this.enemy.frameY >= this.enemy.maxFrame) {
+                this.enemy.isAttacking = false; // Reset isAttacking when transitioning out of attack state
+                this.enemy.setState(states.MOVE_LEFT);
+            } 
+        }
     }
 //------------------------------------------------------------------------
