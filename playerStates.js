@@ -2,21 +2,21 @@
 
 // states enums
 const states = {
-  IDLE_LEFT : 0 ,
-  IDLE_RIGHT: 1 ,
-  RUN_LEFT : 2 ,
-  RUN_RIGHT: 3 ,
-  KNEEL_LEFT : 4 ,
-  KNEEL_RIGHT:5,
-  JUMP_LEFT:6,
-  JUMP_RIGHT:7,
-  DIE:8,
-  ATTACK_LEFT:9,
-  ATTACK_RIGHT:10,
-  FALL_LEFT:11,
-  FALL_RIGHT:12,
-  STAND_LEFT:13,
-  STAND_RIGHT:14
+  IDLE_LEFT: 0,
+  IDLE_RIGHT: 1,
+  RUN_LEFT: 2,
+  RUN_RIGHT: 3,
+  KNEEL_LEFT: 4,
+  KNEEL_RIGHT: 5,
+  JUMP_LEFT: 6,
+  JUMP_RIGHT: 7,
+  DIE: 8,
+  ATTACK_LEFT: 9,
+  ATTACK_RIGHT: 10,
+  FALL_LEFT: 11,
+  FALL_RIGHT: 12,
+  STAND_LEFT: 13,
+  STAND_RIGHT: 14,
 };
 
 class State {
@@ -44,18 +44,18 @@ export class IdleLeft extends State {
 
   // handle specific inputs only in this state.
   HandleInput(input) {
-    if (input.includes('z')) { 
+    if (input.includes("z")) {
       this.game.player.setState(states.JUMP_LEFT, 0);
-    } else if (input.includes('q') ) {
+    } else if (input.includes("q")) {
       this.game.player.setState(states.RUN_LEFT, -2);
-    } else if(input.includes('d')) {
-      this.game.player.setState(states.RUN_RIGHT , 2)
-    } else if(input.includes('s')) {
-      this.game.player.setState(states.KNEEL_LEFT , 0)
-    } else if(this.game.lives <= 0) {
-      this.game.player.setState(states.DIE , 0);
-    } else if (input.includes(' ')) {
-      this.game.player.setState(states.ATTACK_LEFT , 0)
+    } else if (input.includes("d")) {
+      this.game.player.setState(states.RUN_RIGHT, 2);
+    } else if (input.includes("s")) {
+      this.game.player.setState(states.KNEEL_LEFT, 0);
+    } else if (this.game.lives <= 0) {
+      this.game.player.setState(states.DIE, 0);
+    } else if (input.includes(" ")) {
+      this.game.player.setState(states.ATTACK_LEFT, 0);
     }
   }
 }
@@ -78,22 +78,21 @@ export class IdleRight extends State {
 
   // handle specific inputs only in this state.
   HandleInput(input) {
-    if (input.includes('z')) { 
+    if (input.includes("z")) {
       this.game.player.setState(states.JUMP_RIGHT, 0);
-    } else if (input.includes('q')) {
+    } else if (input.includes("q")) {
       this.game.player.setState(states.RUN_LEFT, -2);
-    } else if(input.includes('d')) {
-      this.game.player.setState(states.RUN_RIGHT , 2)
-    } else if(input.includes('s')) {
-      this.game.player.setState(states.KNEEL_RIGHT , 0)
-    } else if(this.game.lives <= 0) {
-      this.game.player.setState(states.DIE , 0);
-    } else if (input.includes(' ')) {
-      this.game.player.setState(states.ATTACK_RIGHT , 0)
+    } else if (input.includes("d")) {
+      this.game.player.setState(states.RUN_RIGHT, 2);
+    } else if (input.includes("s")) {
+      this.game.player.setState(states.KNEEL_RIGHT, 0);
+    } else if (this.game.lives <= 0) {
+      this.game.player.setState(states.DIE, 0);
+    } else if (input.includes(" ")) {
+      this.game.player.setState(states.ATTACK_RIGHT, 0);
     }
   }
 }
-
 
 //-----------------------------------------------------------------------
 
@@ -113,20 +112,19 @@ export class RunLeft extends State {
 
   // handle specific inputs only in this state.
   HandleInput(input) {
-    if (input.includes('d') ){
-      this.game.player.setState(states.RUN_RIGHT , 2) 
-    } else if (input.includes('s')) {
-      this.game.player.setState(states.KNEEL_LEFT , 0)
-    } else if(input.includes('z')) {
-      this.game.player.setState(states.JUMP_LEFT , 0)
-    } else if(this.game.lives <= 0) {
-      this.game.player.setState(states.DIE , 0)
-    } else if (input.includes(' ')) {
-      this.game.player.setState(states.ATTACK_LEFT , 0)
-    } else if(!input.includes('q')) {
-      this.game.player.setState(states.IDLE_LEFT , 0)
+    if (input.includes("d")) {
+      this.game.player.setState(states.RUN_RIGHT, 2);
+    } else if (input.includes("s")) {
+      this.game.player.setState(states.KNEEL_LEFT, 0);
+    } else if (input.includes("z")) {
+      this.game.player.setState(states.JUMP_LEFT, 0);
+    } else if (this.game.lives <= 0) {
+      this.game.player.setState(states.DIE, 0);
+    } else if (input.includes(" ")) {
+      this.game.player.setState(states.ATTACK_LEFT, 0);
+    } else if (!input.includes("q")) {
+      this.game.player.setState(states.IDLE_LEFT, 0);
     }
-    
   }
 }
 //-----------------------------------------------------------------------
@@ -147,23 +145,21 @@ export class RunRight extends State {
 
   // handle specific inputs only in this state.
   HandleInput(input) {
-    if (input.includes('q')) {
-      this.game.player.setState(states.RUN_LEFT , -2) 
-    } else if (input.includes('s')) {
-      this.game.player.setState(states.KNEEL_RIGHT , 0)
-    } else if(input.includes('z')) {
-      this.game.player.setState(states.JUMP_RIGHT , 0)
-    } else if(this.game.lives <= 0) {
-      this.game.player.setState(states.DIE , 0)
-    } else if (input.includes(' ')) {
-      this.game.player.setState(states.ATTACK_RIGHT , 0)
-    } else if(!input.includes('d')) {
-      this.game.player.setState(states.IDLE_RIGHT , 0)
+    if (input.includes("q")) {
+      this.game.player.setState(states.RUN_LEFT, -2);
+    } else if (input.includes("s")) {
+      this.game.player.setState(states.KNEEL_RIGHT, 0);
+    } else if (input.includes("z")) {
+      this.game.player.setState(states.JUMP_RIGHT, 0);
+    } else if (this.game.lives <= 0) {
+      this.game.player.setState(states.DIE, 0);
+    } else if (input.includes(" ")) {
+      this.game.player.setState(states.ATTACK_RIGHT, 0);
+    } else if (!input.includes("d")) {
+      this.game.player.setState(states.IDLE_RIGHT, 0);
     }
-    
   }
 }
-
 
 //-----------------------------------------------------------------------
 // -kneel l
@@ -184,11 +180,11 @@ export class KneelLeft extends State {
   HandleInput(input) {
     if (this.game.lives <= 0) {
       this.game.player.setState(states.DIE, 0);
-    } else if (input.includes('d') ) {
+    } else if (input.includes("d")) {
       this.game.player.setState(states.KNEEL_RIGHT, 0);
-    } else if(!input.includes('s')){
-      this.game.player.setState(states.IDLE_LEFT, 0)
-    }else {
+    } else if (!input.includes("s")) {
+      this.game.player.setState(states.IDLE_LEFT, 0);
+    } else {
       // Continue to update the player's frame as long as the "down" key is held.
       this.game.player.frameX = 3;
     }
@@ -213,13 +209,13 @@ export class KneelRight extends State {
   HandleInput(input) {
     if (this.game.lives <= 0) {
       this.game.player.setState(states.DIE, 0);
-    } else if (input.includes('q') ) {
+    } else if (input.includes("q")) {
       this.game.player.setState(states.KNEEL_LEFT, 0);
-    } else if(!input.includes('s')){
-      this.game.player.setState(states.IDLE_RIGHT, 0)
-    }else {
+    } else if (!input.includes("s")) {
+      this.game.player.setState(states.IDLE_RIGHT, 0);
+    } else {
       // Continue to update the player's frame as long as the "down" key is held.
-      this.game.player.frameX = 3
+      this.game.player.frameX = 3;
     }
   }
 }
@@ -241,12 +237,12 @@ export class standLeft extends State {
 
   // handle specific inputs only in this state.
   HandleInput(input) {
-    if(this.game.player.frameX >= 5) {
-      this.game.player.setState(states.IDLE_LEFT , 0)
-    } else if(this.game.lives <= 0) {
-      this.game.player.setState(states.DIE , 0)
-    }else if(input.includes('d')  ) {
-      this.game.player.setState(states.STAND_RIGHT , 0)
+    if (this.game.player.frameX >= 5) {
+      this.game.player.setState(states.IDLE_LEFT, 0);
+    } else if (this.game.lives <= 0) {
+      this.game.player.setState(states.DIE, 0);
+    } else if (input.includes("d")) {
+      this.game.player.setState(states.STAND_RIGHT, 0);
     }
   }
 }
@@ -267,15 +263,14 @@ export class standRight extends State {
 
   // handle specific inputs only in this state.
   HandleInput(input) {
-     if(this.game.lives <= 0) {
-      this.game.player.setState(states.DIE , 0)
-    } else if(input.includes('q')) {
-      this.game.player.setState(states.STAND_LEFT , 0)
+    if (this.game.lives <= 0) {
+      this.game.player.setState(states.DIE, 0);
+    } else if (input.includes("q")) {
+      this.game.player.setState(states.STAND_LEFT, 0);
     }
   }
 }
 //-----------------------------------------------------------------------
-
 
 // -jum l
 export class JumpLeft extends State {
@@ -293,14 +288,18 @@ export class JumpLeft extends State {
 
   // handle specific inputs only in this state.
   HandleInput(input) {
-    if(input.includes('d')  ) {
-      this.game.player.setState(states.JUMP_RIGHT , 0)
-    } else if((this.game.player.y >= this.game.height - this.game.player.height - this.game.groundMargin) && this.game.player.vy >= 0){
-      this.game.player.setState(states.IDLE_LEFT , 0)
-    } else if(this.game.player.vy > 0) {
-      this.game.player.setState(states.FALL_LEFT , 0)
-    } else if (input.includes(' ') ) {
-      this.game.player.setState(states.ATTACK_LEFT , 0)
+    if (input.includes("d")) {
+      this.game.player.setState(states.JUMP_RIGHT, 0);
+    } else if (
+      this.game.player.y >=
+        this.game.height - this.game.player.height - this.game.groundMargin &&
+      this.game.player.vy >= 0
+    ) {
+      this.game.player.setState(states.IDLE_LEFT, 0);
+    } else if (this.game.player.vy > 0) {
+      this.game.player.setState(states.FALL_LEFT, 0);
+    } else if (input.includes(" ")) {
+      this.game.player.setState(states.ATTACK_LEFT, 0);
     }
   }
 }
@@ -319,16 +318,20 @@ export class JumpRight extends State {
     this.game.player.flipLeft = false;
   }
 
-  // handle specific inputs only in this state. 
+  // handle specific inputs only in this state.
   HandleInput(input) {
-    if(input.includes('q') ) {
-      this.game.player.setState(states.JUMP_LEFT , 0)
-    } else if((this.game.player.y >= this.game.height - this.game.player.height - this.game.groundMargin)&& this.game.player.vy >= 0){
-      this.game.player.setState(states.IDLE_RIGHT , 0)
-    } else if(this.game.player.vy > 0) {
-      this.game.player.setState(states.FALL_RIGHT , 0) 
-    }else if (input.includes(' ')  ) {
-      this.game.player.setState(states.ATTACK_RIGHT , 0)
+    if (input.includes("q")) {
+      this.game.player.setState(states.JUMP_LEFT, 0);
+    } else if (
+      this.game.player.y >=
+        this.game.height - this.game.player.height - this.game.groundMargin &&
+      this.game.player.vy >= 0
+    ) {
+      this.game.player.setState(states.IDLE_RIGHT, 0);
+    } else if (this.game.player.vy > 0) {
+      this.game.player.setState(states.FALL_RIGHT, 0);
+    } else if (input.includes(" ")) {
+      this.game.player.setState(states.ATTACK_RIGHT, 0);
     }
   }
 }
@@ -349,12 +352,15 @@ export class FallLeft extends State {
 
   // handle specific inputs only in this state.
   HandleInput(input) {
-    if(input.includes('d') ) {
-      this.game.player.setState(states.FALL_RIGHT , 0)
-    } else if(this.game.player.y >= this.game.height - this.game.player.height - this.game.groundMargin){
-      this.game.player.setState(states.IDLE_LEFT , 0)
-    } else if (input.includes(' ') ) {
-      this.game.player.setState(states.ATTACK_LEFT, 0)
+    if (input.includes("d")) {
+      this.game.player.setState(states.FALL_RIGHT, 0);
+    } else if (
+      this.game.player.y >=
+      this.game.height - this.game.player.height - this.game.groundMargin
+    ) {
+      this.game.player.setState(states.IDLE_LEFT, 0);
+    } else if (input.includes(" ")) {
+      this.game.player.setState(states.ATTACK_LEFT, 0);
     }
   }
 }
@@ -375,17 +381,19 @@ export class FallRight extends State {
 
   // handle specific inputs only in this state.
   HandleInput(input) {
-    if(input.includes('q')  ) {
-      this.game.player.setState(states.FALL_LEFT , 0)
-    } else if(this.game.player.y >= this.game.height - this.game.player.height - this.game.groundMargin){
-      this.game.player.setState(states.IDLE_RIGHT , 0)
-    } else if (input.includes(' ')  ) {
-      this.game.player.setState(states.ATTACK_RIGHT , 0)
+    if (input.includes("q")) {
+      this.game.player.setState(states.FALL_LEFT, 0);
+    } else if (
+      this.game.player.y >=
+      this.game.height - this.game.player.height - this.game.groundMargin
+    ) {
+      this.game.player.setState(states.IDLE_RIGHT, 0);
+    } else if (input.includes(" ")) {
+      this.game.player.setState(states.ATTACK_RIGHT, 0);
     }
   }
 }
 //-----------------------------------------------------------------------
-
 
 // -die
 export class Die extends State {
@@ -398,11 +406,15 @@ export class Die extends State {
     this.game.player.frameX = 0;
     this.game.player.frameY = 7;
     this.game.player.maxFrame = 7;
+
+    if(this.game.player.frameX >= this.game.player.maxFrame) {
+      this.game.gameOver = true; //set gameOver to true when the die animation ends.
+    }
   }
 }
 //-----------------------------------------------------------------------
 
-// -attack l 
+// -attack l
 export class AttackLeft extends State {
   constructor(game) {
     super("ATTACK LEFT", game);
@@ -414,25 +426,31 @@ export class AttackLeft extends State {
     this.game.player.frameY = 8;
     this.game.player.maxFrame = 8;
     this.game.player.flipLeft = true;
-    if(this.frameY < 8) {
-      this.game.player.attack = true;
-    } else {
-      this.game.player.attack = false;
-    }
+    this.game.player.isAttacking = true;
+    console.log('attack man' , this.game.player.isAttacking)
   }
 
   // handle specific inputs only in this state.
   HandleInput(input) {
-    if(this.game.player.frameX >= 8 && this.game.player.currentState === states.JUMP_LEFT) {
-      this.game.player.setState(states.JUMP_LEFT , 0)
-    } else if (this.game.player.frameX >= 8 && this.game.player.currentState === states.FALL_LEFT) {
-      this.game.player.setState(states.FALL_LEFT , 0)
-    } else if(this.game.player.frameX >= 8) {
-      this.game.player.setState(states.IDLE_LEFT , 0)
-    } 
+    if (
+      this.game.player.frameX >= 8 &&
+      this.game.player.currentState === states.JUMP_LEFT
+    ) {
+      this.game.player.setState(states.JUMP_LEFT, 0);
+    } else if (
+      this.game.player.frameX >= 8 &&
+      this.game.player.currentState === states.FALL_LEFT
+    ) {
+      this.game.player.setState(states.FALL_LEFT, 0);
+    } else if (this.game.player.frameX >= 8) {
+      this.game.player.setState(states.IDLE_LEFT, 0);
+      this.game.player.isAttacking = false;
+      console.log('peace man' , this.game.player.isAttacking)
+
+    }
   }
 }
-//-----------------------------------------------------------------------
+
 // -attack r
 export class AttackRight extends State {
   constructor(game) {
@@ -445,17 +463,26 @@ export class AttackRight extends State {
     this.game.player.frameY = 8;
     this.game.player.maxFrame = 8;
     this.game.player.flipLeft = false;
+    this.game.player.isAttacking = true;
+    console.log('attack man' , this.game.player.isAttacking)
   }
+
 
   // handle specific inputs only in this state.
   HandleInput(input) {
-    if(this.game.player.frameX >= 8 && this.game.player.currentState === states.JUMP_RIGHT) {
-      this.game.player.setState(states.JUMP_RIGHT , 0)
-    } else if (this.game.player.frameX >= 8 && this.game.player.currentState === states.FALL_RIGHT) {
-      this.game.player.setState(states.FALL_RIGHT , 0)
-    } else if(this.game.player.frameX >= 8) {
-      this.game.player.setState(states.IDLE_RIGHT , 0)
-    } 
+    if (
+      this.game.player.frameX >= 8 &&
+      this.game.player.currentState === states.JUMP_RIGHT
+    ) {
+      this.game.player.setState(states.JUMP_RIGHT, 0);
+    } else if (
+      this.game.player.frameX >= 8 &&
+      this.game.player.currentState === states.FALL_RIGHT
+    ) {
+      this.game.player.setState(states.FALL_RIGHT, 0);
+    } else if (this.game.player.frameX >= 8) {
+      this.game.player.setState(states.IDLE_RIGHT, 0);
+      this.game.player.isAttacking = false;
+    }
   }
 }
-//-----------------------------------------------------------------------

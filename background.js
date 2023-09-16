@@ -2,16 +2,17 @@
 
 class Layer {
     constructor(game , width, height , speedModifier , image) {
+        // setting layer properties.
         this.game = game;
         this.width = width;
         this.height = height;
-        this.speedModifier = speedModifier;
+        this.speedModifier = speedModifier; //speed of layer mouvement.
         this.image = image;
         this.x = 0;
         this.y = 0;
     }
 
-    // -lu
+    // -lu layer update.
     update(){
         // reset the background to create infinite scrolling illusion
         if (this.x <= -this.width) this.x = 0;
@@ -19,7 +20,7 @@ class Layer {
         else this.x -= (this.game.speed * this.speedModifier);
     }
 
-    // -ld
+    // -ld layer
     draw(context){
         context.drawImage(this.image , this.x , this.y , this.width, this.height)
         context.drawImage(this.image , this.x + this.width, this.y , this.width ,this.height)
@@ -32,7 +33,7 @@ class Layer {
 export class Background1 {
     constructor(game) {
         this.game = game;
-        this.width = 928
+        this.width = 1200;
         this.height = 793;
         // identifying layers
         this.layer1image = layer1;
