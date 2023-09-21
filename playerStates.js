@@ -426,8 +426,6 @@ export class AttackLeft extends State {
     this.game.player.frameY = 8;
     this.game.player.maxFrame = 8;
     this.game.player.flipLeft = true;
-    this.game.player.isAttacking = true;
-    console.log('attack man' , this.game.player.isAttacking)
   }
 
   // handle specific inputs only in this state.
@@ -444,8 +442,6 @@ export class AttackLeft extends State {
       this.game.player.setState(states.FALL_LEFT, 0);
     } else if (this.game.player.frameX >= 8) {
       this.game.player.setState(states.IDLE_LEFT, 0);
-      this.game.player.isAttacking = false;
-      console.log('peace man' , this.game.player.isAttacking)
 
     }
   }
@@ -463,8 +459,6 @@ export class AttackRight extends State {
     this.game.player.frameY = 8;
     this.game.player.maxFrame = 8;
     this.game.player.flipLeft = false;
-    this.game.player.isAttacking = true;
-    console.log('attack man' , this.game.player.isAttacking)
   }
 
 
@@ -482,7 +476,6 @@ export class AttackRight extends State {
       this.game.player.setState(states.FALL_RIGHT, 0);
     } else if (this.game.player.frameX >= 8) {
       this.game.player.setState(states.IDLE_RIGHT, 0);
-      this.game.player.isAttacking = false;
     }
   }
 }

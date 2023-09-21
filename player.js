@@ -24,7 +24,7 @@ export class player {
     this.game = game;
     this.spriteWidth = 32;
     this.spriteHeight = 32;
-    this.width = this.spriteWidth * 3;
+    this.width = this.spriteWidth * 2;
     this.height = this.spriteHeight * 3;
     this.speedX = 0;
     this.vy = 0;
@@ -43,6 +43,15 @@ export class player {
     this.currentState = null;
     this.flipLeft = false;
     this.isAttacking = false;
+    this.attackTimer = 0;
+    this.attackInterval = 1000;
+    
+    this.hitBox = {
+      x : (this.x + this.width / 2) - 10,
+      y : (this.y + this.height / 2) - 10 ,
+      width : 20,
+      height : 20
+    }
     // player states :
     this.states = [
       new IdleLeft(this.game),
@@ -65,13 +74,35 @@ export class player {
 
   // -pd
   draw(context) {
-    // drawing hitbox.
+    
+    //drawing the player based on his direction.
+    const scaleX = this.flipLeft ? -1 : 1;
+    // drawing player box.
     if (this.game.debug) {
       context.strokeStyle = "red";
       context.strokeRect(this.x, this.y, this.width, this.height);
+      // draw player hitBox.
+      if(this.flipLeft) {
+        this.hitBox = {
+          x : (this.x - this.width / 2) - 10,
+          y : (this.y + this.height / 2) - 10 ,
+          width : 20,
+          height : 20
+        }    
+        context.fillStyle = "yellow";
+        context.fillRect(this.hitBox.x , this.hitBox.y , this.hitBox.width, this.hitBox.height)
+      } else {
+        this.hitBox = {
+          x : (this.x + this.width *1.5) - 10,
+          y : (this.y + this.height / 2) - 10 ,
+          width : 20,
+          height : 20
+        }    
+
+        context.fillStyle = "yellow";
+        context.fillRect(this.hitBox.x, this.hitBox.y , this.hitBox.width, this.hitBox.height)
+      }
     }
-    //drawing the player based on his direction.
-    const scaleX = this.flipLeft ? -1 : 1;
     context.save();
     context.scale(scaleX, 1);
     if (this.flipLeft) {
@@ -102,15 +133,30 @@ export class player {
     context.restore();
   }
 
-  // -pu
-  update(deltaTime, input) {
-    // control horizontal and vertical movement of the player.
-    this.playerMovement(input);
-    // animate spritesheet :
-    this.spriteAnimation(deltaTime);
-    // input state handeling.
-    this.currentState.HandleInput(input);
+// -pu
+update(deltaTime, input) {
+  // control horizontal and vertical movement of the player.
+  this.playerMovement(input);
+  // animate spritesheet :
+  this.spriteAnimation(deltaTime);
+  // input state handling.
+  this.currentState.HandleInput(input);
+
+  // Handle player attack logic
+  if (this.attackTimer < this.attackInterval) {
+    this.attackTimer += deltaTime;
+  } else if (input.includes(' ')) {
+    this.isAttacking = true;
+    this.attackTimer = 0; // Reset attack timer when the attack occurs
   }
+
+  // Check for collisions with enemies using the player's hitbox
+  for (const enemy of this.game.enemies) {
+    if (this.checkHitBoxCollision(enemy, this.hitBox)) {
+      // Handle collision actions here
+    }
+  }
+}
 
   playerMovement(input) {
     // horizontal movement
@@ -146,6 +192,10 @@ export class player {
       this.isOnGround = false; // Player is now in the air
     }
 
+    // Update the hitbox y position based on the player's y position
+    this.hitBox.y = (this.y + this.height / 2) - 10;
+
+
     this.y += this.vy;
 
     // Apply gravity
@@ -173,20 +223,21 @@ export class player {
     }
   }
 
-  collideWithEnemy(enemy) {
-    // collision conditions.
-      if (
-        enemy.x < this.x + this.width &&
-        enemy.x + enemy.width > this.x &&
-        enemy.y < this.y + this.height &&
-        enemy.y + enemy.height > this.y
-      ) {
-        return true; // Collision detected
-      }
-
+  // check if player's hitbox collided with enemy.
+  checkHitBoxCollision(enemy, hitbox) {
+    // Collision conditions.
+    if (
+      enemy.x < hitbox.x + hitbox.width &&
+      enemy.x + enemy.width > hitbox.x &&
+      enemy.y < hitbox.y + hitbox.height &&
+      enemy.y + enemy.height > hitbox.y
+    ) {
+      return true; // Collision detected
+    }
+  
     return false; // No collision detected
   }
-
+  
   setState(state, speed) { 
     //set the current state to the state that has been switched to from player states.
     this.currentState = this.states[state];
